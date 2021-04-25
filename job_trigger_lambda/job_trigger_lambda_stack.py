@@ -23,15 +23,16 @@ class JobTriggerLambdaStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # Get VPC
-        vpc = Vpc.from_vpc_attributes(self,
-                                      id='vpc-dev',
-                                      vpc_id='YOUR_VPC_ID',
-                                      availability_zones=core.Fn.get_azs(),
-                                      private_subnet_ids=[
-                                          'YOUR_PRIVATE_SUBNET_ID1','YOUR_PRIVATE_SUBNET_ID2','YOUR_PRIVATE_SUBNET_ID2'],
-                                      private_subnet_route_table_ids=[
-                                          'YOUR_PRIVATE_ROUTE_TABLE_ID1','YOUR_PRIVATE_ROUTE_TABLE_ID2','YOUR_PRIVATE_ROUTE_TABLE_ID3']
-                                      )
+        vpc = Vpc.from_vpc_attributes(
+            self,
+            id='vpc-dev',
+            vpc_id='YOUR_VPC_ID',
+            availability_zones=core.Fn.get_azs(),
+            private_subnet_ids=[
+                'YOUR_PRIVATE_SUBNET_ID1', 'YOUR_PRIVATE_SUBNET_ID2', 'YOUR_PRIVATE_SUBNET_ID2'],
+            private_subnet_route_table_ids=[
+                'YOUR_PRIVATE_ROUTE_TABLE_ID1', 'YOUR_PRIVATE_ROUTE_TABLE_ID2', 'YOUR_PRIVATE_ROUTE_TABLE_ID3']
+        )
 
         # Create lambda
         my_lambda = _lambda.Function(
@@ -88,7 +89,7 @@ class JobTriggerLambdaStack(core.Stack):
             dashboard_name='JobTriggerLambdaDashboard',
         )
 
-        ## Duration Widget
+        # Duration Widget
         duration_widget = _cw.GraphWidget(
             title='Lambda Duration',
             width=12,
@@ -104,7 +105,7 @@ class JobTriggerLambdaStack(core.Stack):
         )
         duration_widget.add_left_metric(duration_metrics)
 
-        ## stats widgets
+        # stats widgets
         invocation_metric = _cw.Metric(
             namespace='AWS/Lambda',
             metric_name='Invocations',
@@ -213,7 +214,8 @@ class JobTriggerLambdaStack(core.Stack):
                         metric=_cw.CfnAlarm.MetricProperty(
                             metric_name='Duration',
                             namespace='AWS/Lambda',
-                            dimensions=[_cw.CfnAlarm.DimensionProperty(name='FunctionName',value=my_lambda.function_name)],
+                            dimensions=[_cw.CfnAlarm.DimensionProperty(
+                                name='FunctionName', value=my_lambda.function_name)],
                         ),
                         period=core.Duration.minutes(5).to_seconds(),
                         stat="p99.00"
@@ -276,7 +278,8 @@ class JobTriggerLambdaStack(core.Stack):
                         metric=_cw.CfnAlarm.MetricProperty(
                             namespace='job-scheduler-poc',
                             metric_name='JOB_LATENCY',
-                            dimensions=[_cw.CfnAlarm.DimensionProperty(name='JOB_LATENCY',value='RandomMessageProcessor')],
+                            dimensions=[_cw.CfnAlarm.DimensionProperty(
+                                name='JOB_LATENCY', value='RandomMessageProcessor')],
                         ),
                         period=core.Duration.minutes(5).to_seconds(),
                         stat="p99.00"
