@@ -25,12 +25,12 @@ class JobTriggerLambdaStack(core.Stack):
         # Get VPC
         vpc = Vpc.from_vpc_attributes(self,
                                       id='vpc-dev',
-                                      vpc_id='vpc-0d9383d4d2fc46b20',
+                                      vpc_id='YOUR_VPC_ID',
                                       availability_zones=core.Fn.get_azs(),
                                       private_subnet_ids=[
-                                          'subnet-0959bfec85e2bba81', 'subnet-0b421f8df917b7600', 'subnet-0cac2189bcc581297'],
+                                          'YOUR_PRIVATE_SUBNET_ID1','YOUR_PRIVATE_SUBNET_ID2','YOUR_PRIVATE_SUBNET_ID2'],
                                       private_subnet_route_table_ids=[
-                                          'rtb-0c0105a9318b14aa3', 'rtb-061925f20b1054eea', 'rtb-0bc52b11ef4357c66']
+                                          'YOUR_PRIVATE_ROUTE_TABLE_ID1','YOUR_PRIVATE_ROUTE_TABLE_ID2','YOUR_PRIVATE_ROUTE_TABLE_ID3']
                                       )
 
         # Create lambda
