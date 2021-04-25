@@ -44,15 +44,16 @@ class JobTriggerLambdaStack(core.Stack):
             log_retention=_logs.RetentionDays.THREE_DAYS,
         )
         core.Tags.of(my_lambda).add('src.projectKey', 'job-scheduler-poc')
-        my_lambda.add_to_role_policy(_iam.PolicyStatement(
-            effect=_iam.Effect.ALLOW,
-            actions=[
-                "ssm:Describe*",
-                "ssm:Get*",
-                "ssm:List*"
-            ],
-            resources=["*"],
-        )
+        my_lambda.add_to_role_policy(
+            _iam.PolicyStatement(
+                effect=_iam.Effect.ALLOW,
+                actions=[
+                    "ssm:Describe*",
+                    "ssm:Get*",
+                    "ssm:List*"
+                ],
+                resources=["*"],
+            )
         )
 
         # Create SNS
