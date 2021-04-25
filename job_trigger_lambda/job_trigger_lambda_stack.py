@@ -65,7 +65,7 @@ class JobTriggerLambdaStack(core.Stack):
         )
         core.Tags.of(topic).add('src.projectKey', 'job-scheduler-poc')
         topic.add_subscription(_subs.EmailSubscription(
-            email_address='ricky.martaputra@gmail.com'))
+            email_address='your-email@xyz.com'))
 
         # Create cloudwatch events
         rule = _events.Rule(
